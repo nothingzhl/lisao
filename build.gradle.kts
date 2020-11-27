@@ -1,6 +1,12 @@
 allprojects {
     group = "org.zhl"
     version = "1.0"
+
+    ext{
+        set("guavaVersion","29.0-jre")
+        set("junitVersion","5.6.2")
+        set("lombokVersion","1.18.16")
+    }
 }
 
 subprojects {
@@ -16,14 +22,21 @@ subprojects {
 
     dependencies {
 
-        "implementation"("com.google.guava:guava:29.0-jre")
-        "testImplementation"("org.junit.jupiter:junit-jupiter-api:5.6.2")
-        "testRuntimeOnly"("org.junit.jupiter:junit-jupiter-engine:5.6.2")
+        val guavaVersion = rootProject.ext["guavaVersion"]
+        val junitVersion = rootProject.ext["junitVersion"]
+        val lombokVersion = rootProject.ext["lombokVersion"]
 
-        "compileOnly"("org.projectlombok:lombok:1.18.16")
+        print(lombokVersion)
+
+        "implementation"("com.google.guava:guava:${guavaVersion}")
+
+        "testImplementation"("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
+        "testRuntimeOnly"("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+        "testImplementation"("org.junit.jupiter:junit-jupiter-params:${junitVersion}")
+
+        "compileOnly"("org.projectlombok:lombok:${lombokVersion}")
         "annotationProcessor"("org.projectlombok:lombok:1.18.16")
-
-        "testCompileOnly"("org.projectlombok:lombok:1.18.16")
+        "testCompileOnly"("org.projectlombok:lombok:${lombokVersion}")
         "testAnnotationProcessor"("org.projectlombok:lombok:1.18.16")
     }
     
