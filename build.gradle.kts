@@ -26,13 +26,6 @@ subprojects {
         val junitVersion = rootProject.ext["junitVersion"]
         val lombokVersion = rootProject.ext["lombokVersion"]
 
-        print(lombokVersion)
-        "implementation"("com.google.guava:guava:29.0-jre")
-
-        "testImplementation"("org.junit.jupiter:junit-jupiter-api:5.6.2")
-        "testRuntimeOnly"("org.junit.jupiter:junit-jupiter-engine:5.6.2")
-        "testImplementation"("org.junit.jupiter:junit-jupiter-params:5.6.2")
-
         "implementation"("com.google.guava:guava:${guavaVersion}")
 
         "testImplementation"("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
