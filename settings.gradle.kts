@@ -9,3 +9,4 @@
 
 rootProject.name = "lisao"
 include("junit5")
+include("core")
