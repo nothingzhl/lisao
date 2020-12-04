@@ -1,11 +1,18 @@
 package org.zhl.unsafe;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.lang.reflect.Field;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.junit.jupiter.api.Test;
 
+import sun.misc.Cleaner;
 import sun.misc.Unsafe;
 
 /**
@@ -48,6 +55,33 @@ public class UnsafeTest {
         unsafe.freeMemory(address);
     }
 
+    /**
+     * @see java.nio.DirectByteBuffer
+     */
+    @Test
+    void testDirectMem() {
+
+        long size = 1024L;
+
+        // base address
+        long base = unsafe.allocateMemory(size);
+        unsafe.setMemory(base,size,(byte)0);
+
+        Cleaner.create(this,()->{
+            unsafe.freeMemory(base);
+        });
+    }
+
+    @Test
+    void testSystemMethod() {
+        // 系统指针大学
+        int systemPointSize = unsafe.addressSize();
+        System.out.println(systemPointSize);
+        // 内存也的大小
+        int pageSize = unsafe.pageSize();
+        System.out.println(pageSize);
+    }
+
     @Test
     void testMemoryMethodWithClass() throws Exception {
 
@@ -63,10 +97,13 @@ public class UnsafeTest {
     }
 
     @Test
-    void testToAddress() {
-        Object[] objects = new Object[2];
-        int i = unsafe.arrayBaseOffset(objects.getClass());
-        int anInt = unsafe.getInt(objects, i);
-
+    void testAtomicCounter() throws Exception {
+        AtomicCounter atomicCounter = new AtomicCounter(unsafe);
+        List<CompletableFuture<Void>> result = IntStream.range(0, 1000)
+                .mapToObj(it -> CompletableFuture.runAsync(() -> atomicCounter.increment(),
+                        Executors.newFixedThreadPool(100)))
+                .collect(Collectors.toList());
+        CompletableFuture.allOf(result.toArray(new CompletableFuture[0])).join();
+        assertEquals(1000,atomicCounter.getCounter());
     }
 }
