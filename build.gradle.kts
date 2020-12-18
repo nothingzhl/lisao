@@ -7,6 +7,7 @@ allprojects {
         set("junitVersion", "5.6.2")
         set("lombokVersion", "1.18.16")
         set("log4jVersion", "2.14.0")
+        set("springFrameworkVersion","5.3.2");
     }
 
 
@@ -25,7 +26,7 @@ subprojects {
 
     dependencies {
 
-        var guavaVersion = rootProject.ext["guavaVersion"] as String?
+        val guavaVersion = rootProject.ext["guavaVersion"] as String?
         val junitVersion = rootProject.ext["junitVersion"] as String?
         val lombokVersion = rootProject.ext["lombokVersion"] as String?
 

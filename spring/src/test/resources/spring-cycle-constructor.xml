@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="classA" class="org.zhl.bean.ClassA">
+        <constructor-arg index="0" ref="classB"/>
+    </bean>
+
+    <bean id="classB" class="org.zhl.bean.ClassB">
+        <constructor-arg index="0" ref="classC"/>
+    </bean>
+
+    <bean id="classC" class="org.zhl.bean.ClassC">
+        <constructor-arg index="0" ref="classA"/>
+    </bean>
+
+
+</beans>
