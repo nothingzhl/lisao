@@ -1,4 +1,4 @@
-package org.zhl.bean;
+package org.zhl.bean.cycle;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

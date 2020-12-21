@@ -1,4 +1,4 @@
-package org.zhl.bean;
+package org.zhl.bean.cycle;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,8 +10,8 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @RequiredArgsConstructor
-public class ClassA {
+public class ClassB {
 
     @NonNull
-    private ClassB classB;
+    private ClassC classC;
 }

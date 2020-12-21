@@ -1,4 +1,4 @@
-package org.zhl.bean;
+package org.zhl.bean.cycle;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

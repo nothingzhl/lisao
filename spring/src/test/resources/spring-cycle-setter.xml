@@ -3,16 +3,16 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="classA" class="org.zhl.bean.ClassA">
+    <bean id="classA" class="org.zhl.bean.cycle.ClassA">
         <property name="classB" ref="classB"/>
     </bean>
 
-    <bean id="classB" class="org.zhl.bean.ClassB">
+    <bean id="classB" class="org.zhl.bean.cycle.ClassB">
         <property name="classC" ref="classC"/>
 
     </bean>
 
-    <bean id="classC" class="org.zhl.bean.ClassC">
+    <bean id="classC" class="org.zhl.bean.cycle.ClassC">
         <property name="classA" ref="classA"/>
     </bean>
 
