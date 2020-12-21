@@ -1,5 +1,5 @@
 buildscript {
-     repositories {
+    repositories {
         maven("http://maven.aliyun.com/nexus/content/groups/public/")
         jcenter()
         google()
@@ -17,7 +17,8 @@ allprojects {
         set("junitVersion", "5.6.2")
         set("lombokVersion", "1.18.16")
         set("log4jVersion", "2.14.0")
-        set("springFrameworkVersion","5.3.2");
+        set("springFrameworkVersion", "5.3.2");
+        set("vavrVersion", "0.10.3")
     }
 
 
@@ -26,7 +27,7 @@ allprojects {
 subprojects {
     apply(plugin = "java")
     apply(plugin = "application")
-    apply(plugin= "idea")
+    apply(plugin = "idea")
 
     repositories {
         maven("http://maven.aliyun.com/nexus/content/groups/public/")
@@ -40,8 +41,11 @@ subprojects {
         val guavaVersion = rootProject.ext["guavaVersion"] as String?
         val junitVersion = rootProject.ext["junitVersion"] as String?
         val lombokVersion = rootProject.ext["lombokVersion"] as String?
+        val vavrVersion = rootProject.ext["vavrVersion"] as String?
 
         "implementation"("com.google.guava", "guava", "$guavaVersion")
+
+        "implementation"("io.vavr", "vavr", "$vavrVersion")
 
 
         "testImplementation"("org.junit.jupiter", "junit-jupiter-api", "$junitVersion")
