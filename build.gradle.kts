@@ -1,3 +1,13 @@
+buildscript {
+     repositories {
+        maven("http://maven.aliyun.com/nexus/content/groups/public/")
+        jcenter()
+        google()
+        mavenCentral()
+    }
+}
+
+
 allprojects {
     group = "org.zhl"
     version = "1.0"
@@ -16,6 +26,7 @@ allprojects {
 subprojects {
     apply(plugin = "java")
     apply(plugin = "application")
+    apply(plugin= "idea")
 
     repositories {
         maven("http://maven.aliyun.com/nexus/content/groups/public/")
