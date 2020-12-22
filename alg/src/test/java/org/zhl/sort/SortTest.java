@@ -2,7 +2,7 @@ package org.zhl.sort;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.RepeatedTest;
-import org.junit.jupiter.api.Test;
+import org.zhl.TestData;
 
 class SortTest extends TestData {
 
@@ -27,12 +27,24 @@ class SortTest extends TestData {
     }
 
     @RepeatedTest(10)
-    void testMergeTest() {
+    void testMergeSort() {
         sortTemple(new MergeSort<Integer>());
     }
 
+    @RepeatedTest(10)
+    void testQuickSort() {
+        sortTemple(new QuickSort<Integer>());
+    }
+
+    @RepeatedTest(10)
+    void testCountingSort() {
+        Integer[] data = getSortTestData();
+        CountingSort countingSort = new CountingSort();
+        countingSort.sort(data);
+    }
+
     private void sortTemple(Sort sort){
-        Integer[] data = genTestData();
+        Integer[] data = getSortTestData();
         sort.sort(data);
         Assertions.assertTrue(sort.isSort(data));
     }
