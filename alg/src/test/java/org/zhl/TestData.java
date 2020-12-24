@@ -25,4 +25,12 @@ public class TestData {
                 .toArray(Integer[]::new);
     }
 
+    protected Integer[] getHeadTestData(){
+        return IntStream.range(0, 100)
+                .map(item -> random.nextInt(100))
+                .distinct()
+                .mapToObj(Integer::new)
+                .toArray(Integer[]::new);
+    }
+
 }
