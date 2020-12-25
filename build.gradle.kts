@@ -19,6 +19,7 @@ allprojects {
         set("log4jVersion", "2.14.0")
         set("springFrameworkVersion", "5.3.2");
         set("vavrVersion", "0.10.3")
+        set("CCVersion","4.1")
     }
 
 
@@ -42,10 +43,12 @@ subprojects {
         val junitVersion = rootProject.ext["junitVersion"] as String?
         val lombokVersion = rootProject.ext["lombokVersion"] as String?
         val vavrVersion = rootProject.ext["vavrVersion"] as String?
+        val CCVersion = rootProject.ext["CCVersion"] as String?
 
         "implementation"("com.google.guava", "guava", "$guavaVersion")
 
         "implementation"("io.vavr", "vavr", "$vavrVersion")
+        "implementation"("org.apache.commons", "commons-collections4", "$CCVersion")
 
 
         "testImplementation"("org.junit.jupiter", "junit-jupiter-api", "$junitVersion")
