@@ -16,10 +16,8 @@ public class ACTrie {
 
 
     @Data
-    @RequiredArgsConstructor
     public class AcNode {
 
-        @NonNull
         private char data;
         private AcNode[] children = new AcNode[26];
         private boolean isEndingChar = false;

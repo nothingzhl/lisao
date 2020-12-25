@@ -61,14 +61,15 @@ public class TrieTree {
     }
 
     @Data
-    @RequiredArgsConstructor
     class TrieNode {
 
-        @NonNull
         private char data;
         private TrieNode[] children = new TrieNode[26];
         public boolean isEndingChar = false;
 
+        public TrieNode(char data) {
+            this.data = data;
+        }
     }
 
 }
