@@ -48,4 +48,46 @@ public class ZeroOneBag {
         new ZeroOneBag().fill(0, 0, a, 10, 100);
     }
 
+    /**
+     * 动态规划版 背包问题
+     *
+     * @param weight 物品重量
+     * @param n      物品个数
+     * @param w      背包可承载重量
+     *
+     * @return
+     */
+    public int dynamic(int[] weight, int n, int w) {
+
+        boolean[][] states = new boolean[n][w + 1];
+
+        // 初始化数据
+        states[0][0] = true;
+        if (weight[0] <= w) {
+            states[0][weight[0]] = true;
+        }
+
+        //动态规划状态转移
+        for (int i = 1; i < n; i++) {
+            for (int j = 0; j < w; j++) { // 不放第i个物品
+                if (states[i - 1][j] = true) {
+                    states[i][j] = states[i - 1][j];
+                }
+            }
+            for (int j = 0; j < w - weight[i]; j++) { // 放第i个物品
+                if (states[i - 1][j] == true) {
+                    states[i][j + weight[i]] = true;
+                }
+            }
+        }
+
+        for (int i = w; i >= 0; --i) {
+            if (states[n - 1][i] == true) {
+                return i;
+            }
+        }
+
+        return 0;
+    }
+
 }
