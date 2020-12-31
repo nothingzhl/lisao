@@ -50,6 +50,7 @@ subprojects {
         "implementation"("io.vavr", "vavr", "$vavrVersion")
         "implementation"("org.apache.commons", "commons-collections4", "$CCVersion")
 
+        "implementation"("com.alibaba","fastjson","1.2.75")
 
         "testImplementation"("org.junit.jupiter", "junit-jupiter-api", "$junitVersion")
         "testRuntimeOnly"("org.junit.jupiter", "junit-jupiter-engine", "$junitVersion")
