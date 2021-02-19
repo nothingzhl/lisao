@@ -17,9 +17,11 @@ allprojects {
         set("junitVersion", "5.6.2")
         set("lombokVersion", "1.18.16")
         set("log4jVersion", "2.14.0")
-        set("springFrameworkVersion", "5.3.2");
+        set("springFrameworkVersion", "5.3.2")
         set("vavrVersion", "0.10.3")
-        set("CCVersion","4.1")
+        set("CCVersion", "4.1")
+        set("javaFakerVersion", "1.0.2")
+        set("jmockdataVersion", "4.2.0")
     }
 
 
@@ -44,13 +46,18 @@ subprojects {
         val lombokVersion = rootProject.ext["lombokVersion"] as String?
         val vavrVersion = rootProject.ext["vavrVersion"] as String?
         val CCVersion = rootProject.ext["CCVersion"] as String?
+        val javaFakerVersion = rootProject.ext["javaFakerVersion"] as String?
+        val jmockdataVersion = rootProject.ext["jmockdataVersion"] as String?
+
+        "implementation"("com.github.jsonzou", "jmockdata", "$jmockdataVersion")
+        "implementation"("com.github.javafaker", "javafaker", "$javaFakerVersion")
 
         "implementation"("com.google.guava", "guava", "$guavaVersion")
 
         "implementation"("io.vavr", "vavr", "$vavrVersion")
         "implementation"("org.apache.commons", "commons-collections4", "$CCVersion")
 
-        "implementation"("com.alibaba","fastjson","1.2.75")
+        "implementation"("com.alibaba", "fastjson", "1.2.75")
 
         "testImplementation"("org.junit.jupiter", "junit-jupiter-api", "$junitVersion")
         "testRuntimeOnly"("org.junit.jupiter", "junit-jupiter-engine", "$junitVersion")

@@ -1,13 +1,14 @@
 tasks.withType<JavaCompile> {
     // 限制不安全是内部专有API的警告
     options.compilerArgs = listOf("-XDignore.symbol.file")
-    options.forkOptions.executable = "javac"
+//    options.forkOptions.executable = "javac"
     options.isFork = true
 }
 
 dependencies {
+    val current = org.gradle.internal.jvm.Jvm.current()
     // 添加tool到classpath中
-    implementation(files(org.gradle.internal.jvm.Jvm.current().toolsJar))
+    implementation(files(current?.toolsJar ?: ""))
 }
 
 tasks.create<Jar>("agentJar") {
