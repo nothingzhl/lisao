@@ -3,7 +3,6 @@ package org.zhl.io.nio;
 import lombok.SneakyThrows;
 
 import java.io.IOException;
-import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
@@ -23,7 +22,7 @@ public class NioServer {
     public static void main(final String[] args) {
         System.out.println("服务启动");
         final ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
-        serverSocketChannel.bind(new InetSocketAddress(InetAddress.getLocalHost(), 8888), 50);
+        serverSocketChannel.bind(new InetSocketAddress(8888), 50);
         serverSocketChannel.configureBlocking(false);
 
         // 开启Selector
@@ -38,19 +37,29 @@ public class NioServer {
 
             while (selectionKeyIterator.hasNext()) {
                 final SelectionKey key = selectionKeyIterator.next();
-                if (key.isValid()) {
+                if (!key.isValid()) {
                     continue;
                 } else if (key.isAcceptable()) {
                     parserAcceptableEvent(selector, key);
                 } else if (key.isReadable()) {
-                    parserReadableEvent(key);
+                    parserReadableEvent(selector, key);
                 } else if (key.isConnectable()) {
                     parserConnectableEvent(selector, key);
+                } else if (key.isWritable()) {
+                    parserWritableEvent(selector, key);
                 }
                 selectionKeyIterator.remove();
             }
         }
 
+    }
+
+    @SneakyThrows
+    private static void parserWritableEvent(final Selector selector, final SelectionKey key) {
+        final SocketChannel channel = (SocketChannel)key.channel();
+        final ByteBuffer attachment = (ByteBuffer)key.attachment();
+        attachment.put(Charset.defaultCharset().encode("We Done!"));
+        channel.write(attachment);
     }
 
     /**
@@ -61,6 +70,7 @@ public class NioServer {
      * @throws IOException
      */
     private static void parserConnectableEvent(final Selector selector, final SelectionKey key) throws IOException {
+        System.out.println("进入Connectable!");
         final SocketChannel channel = (SocketChannel)key.channel();
         if (channel.finishConnect()) {
         }
@@ -72,17 +82,18 @@ public class NioServer {
      * @param key
      * @throws IOException
      */
-    private static void parserReadableEvent(final SelectionKey key) throws IOException {
+    private static void parserReadableEvent(final Selector selector, final SelectionKey key) throws IOException {
+        System.out.println("进入Readable！");
         final ByteBuffer buffer = ByteBuffer.allocate(1024);
         final SocketChannel channel = (SocketChannel)key.channel();
-        channel.write(Charset.defaultCharset().encode("hello world"));
         final int read = channel.read(buffer);
         if (read == -1) {
             key.cancel();
             channel.close();
         } else {
             buffer.flip();
-            channel.write(buffer);
+            key.attach(buffer);
+            channel.register(selector, SelectionKey.OP_WRITE);
         }
     }
 
@@ -94,6 +105,7 @@ public class NioServer {
      * @throws IOException
      */
     private static void parserAcceptableEvent(final Selector selector, final SelectionKey key) throws IOException {
+        System.out.println("进入Acceptable");
         final ServerSocketChannel channel = (ServerSocketChannel)key.channel();
         final SocketChannel clientChannel = channel.accept();
         clientChannel.configureBlocking(false);
