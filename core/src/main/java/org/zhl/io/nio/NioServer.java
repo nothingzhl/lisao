@@ -2,7 +2,6 @@ package org.zhl.io.nio;
 
 import lombok.SneakyThrows;
 
-import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
@@ -32,84 +31,65 @@ public class NioServer {
 
         while (true) {
             selector.select();
+
             final Set<SelectionKey> selectionKeys = selector.selectedKeys();
-            final Iterator<SelectionKey> selectionKeyIterator = selectionKeys.iterator();
 
-            while (selectionKeyIterator.hasNext()) {
-                final SelectionKey key = selectionKeyIterator.next();
-                if (!key.isValid()) {
-                    continue;
-                } else if (key.isAcceptable()) {
-                    parserAcceptableEvent(selector, key);
-                } else if (key.isReadable()) {
-                    parserReadableEvent(selector, key);
-                } else if (key.isConnectable()) {
-                    parserConnectableEvent(selector, key);
-                } else if (key.isWritable()) {
-                    parserWritableEvent(selector, key);
+            final Iterator<SelectionKey> iterator = selectionKeys.iterator();
+
+            while (iterator.hasNext()) {
+
+                final SelectionKey key = iterator.next();
+
+                try {
+                    handle(selector, key);
+                } catch (final Exception e) {
+                    e.printStackTrace();
                 }
-                selectionKeyIterator.remove();
+
+                iterator.remove();
+
             }
+
         }
 
     }
 
-    @SneakyThrows
-    private static void parserWritableEvent(final Selector selector, final SelectionKey key) {
-        final SocketChannel channel = (SocketChannel)key.channel();
-        final ByteBuffer attachment = (ByteBuffer)key.attachment();
-        attachment.put(Charset.defaultCharset().encode("We Done!"));
-        channel.write(attachment);
-    }
+    private static void handle(final Selector selector, final SelectionKey key) throws Exception {
 
-    /**
-     * 链接事件处理方法
-     *
-     * @param selector
-     * @param key
-     * @throws IOException
-     */
-    private static void parserConnectableEvent(final Selector selector, final SelectionKey key) throws IOException {
-        System.out.println("进入Connectable!");
-        final SocketChannel channel = (SocketChannel)key.channel();
-        if (channel.finishConnect()) {
-        }
-    }
-
-    /**
-     * 可读事件处理方法
-     *
-     * @param key
-     * @throws IOException
-     */
-    private static void parserReadableEvent(final Selector selector, final SelectionKey key) throws IOException {
-        System.out.println("进入Readable！");
-        final ByteBuffer buffer = ByteBuffer.allocate(1024);
-        final SocketChannel channel = (SocketChannel)key.channel();
-        final int read = channel.read(buffer);
-        if (read == -1) {
+        if (!key.isValid()) {
             key.cancel();
-            channel.close();
-        } else {
-            buffer.flip();
-            key.attach(buffer);
-            channel.register(selector, SelectionKey.OP_WRITE);
         }
-    }
 
-    /**
-     * 接受事件处理办法
-     *
-     * @param selector
-     * @param key
-     * @throws IOException
-     */
-    private static void parserAcceptableEvent(final Selector selector, final SelectionKey key) throws IOException {
-        System.out.println("进入Acceptable");
-        final ServerSocketChannel channel = (ServerSocketChannel)key.channel();
-        final SocketChannel clientChannel = channel.accept();
-        clientChannel.configureBlocking(false);
-        clientChannel.register(selector, SelectionKey.OP_READ);
+        if (key.isAcceptable()) {
+            final ServerSocketChannel serverSocketChannel = (ServerSocketChannel)key.channel();
+            final SocketChannel accept = serverSocketChannel.accept();
+            accept.configureBlocking(false);
+            accept.register(selector, SelectionKey.OP_READ);
+        } else if (key.isReadable()) {
+            final SocketChannel socketChannel = (SocketChannel)key.channel();
+            final ByteBuffer readBuffer = ByteBuffer.allocate(1024);
+            readBuffer.clear();
+            socketChannel.read(readBuffer);
+            System.out.println(new String(readBuffer.array()));
+            key.interestOps(SelectionKey.OP_WRITE);
+        } else if (key.isWritable()) {
+            final SocketChannel socketChannel = (SocketChannel)key.channel();
+            final ByteBuffer buffer = ByteBuffer.allocate(128);
+            buffer.rewind();
+            if (buffer.isReadOnly()) {
+                throw new RuntimeException("有问题");
+            }
+            buffer.put(Charset.defaultCharset().encode("we done!").array());
+            System.out.println("echo =====>" + new String(buffer.array()));
+            while (buffer.hasRemaining()) {
+                socketChannel.write(buffer);
+            }
+            key.interestOps(SelectionKey.OP_READ);
+        } else if (key.isConnectable()) {
+            final SocketChannel channel = (SocketChannel)key.channel();
+            channel.register(selector, SelectionKey.OP_READ);
+        }
+
     }
 
 }
