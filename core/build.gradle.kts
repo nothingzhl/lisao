@@ -8,7 +8,7 @@ tasks.withType<JavaCompile> {
 dependencies {
     val current = org.gradle.internal.jvm.Jvm.current()
     // 添加tool到classpath中
-    implementation(files(current?.toolsJar ?: ""))
+//    implementation(files(current?.toolsJar ?: ""))
 }
 
 tasks.create<Jar>("agentJar") {
