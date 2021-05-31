@@ -22,6 +22,8 @@ allprojects {
         set("CCVersion", "4.1")
         set("javaFakerVersion", "1.0.2")
         set("jmockdataVersion", "4.2.0")
+        set("jolVersion", "0.16")
+        set("fastjsonVersion", "1.2.75")
     }
 
 
@@ -48,6 +50,8 @@ subprojects {
         val CCVersion = rootProject.ext["CCVersion"] as String?
         val javaFakerVersion = rootProject.ext["javaFakerVersion"] as String?
         val jmockdataVersion = rootProject.ext["jmockdataVersion"] as String?
+        val jolVersion = rootProject.ext["jolVersion"] as String?
+        val fastjsonVersion = rootProject.ext["fastjsonVersion"] as String?
 
         "implementation"("com.github.jsonzou", "jmockdata", "$jmockdataVersion")
         "implementation"("com.github.javafaker", "javafaker", "$javaFakerVersion")
@@ -57,7 +61,8 @@ subprojects {
         "implementation"("io.vavr", "vavr", "$vavrVersion")
         "implementation"("org.apache.commons", "commons-collections4", "$CCVersion")
 
-        "implementation"("com.alibaba", "fastjson", "1.2.75")
+        "implementation"("com.alibaba", "fastjson", "$fastjsonVersion")
+        "compileOnly"("org.openjdk.jol", "jol-core", "$jolVersion")
 
         "testImplementation"("org.junit.jupiter", "junit-jupiter-api", "$junitVersion")
         "testRuntimeOnly"("org.junit.jupiter", "junit-jupiter-engine", "$junitVersion")
