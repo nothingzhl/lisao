@@ -62,7 +62,7 @@ subprojects {
         "implementation"("org.apache.commons", "commons-collections4", "$CCVersion")
 
         "implementation"("com.alibaba", "fastjson", "$fastjsonVersion")
-        "compileOnly"("org.openjdk.jol", "jol-core", "$jolVersion")
+        "implementation"("org.openjdk.jol", "jol-core", "$jolVersion")
 
         "testImplementation"("org.junit.jupiter", "junit-jupiter-api", "$junitVersion")
         "testRuntimeOnly"("org.junit.jupiter", "junit-jupiter-engine", "$junitVersion")

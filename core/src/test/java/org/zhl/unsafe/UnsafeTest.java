@@ -1,7 +1,8 @@
 package org.zhl.unsafe;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import org.junit.jupiter.api.Test;
+import sun.misc.Cleaner;
+import sun.misc.Unsafe;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -10,17 +11,18 @@ import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import org.junit.jupiter.api.Test;
-
-import sun.misc.Cleaner;
-import sun.misc.Unsafe;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * Unsafe
+ *
  * @author zhanghanlin
  */
+@SuppressWarnings("unchecked")
 public class UnsafeTest {
 
+    @SuppressWarnings("unchecked")
     private Unsafe unsafe = getUnsafe();
 
     /**
@@ -28,7 +30,8 @@ public class UnsafeTest {
      * unsafe的获取需要是引导类加载才合法
      * @return
      */
-    private static Unsafe getUnsafe(){
+    @SuppressWarnings("unchecked")
+    private static Unsafe getUnsafe() {
         try {
             Field field = Unsafe.class.getDeclaredField("theUnsafe");
             field.setAccessible(true);

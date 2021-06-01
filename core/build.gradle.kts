@@ -25,7 +25,7 @@ tasks.create<Jar>("agentJar") {
     manifest.attributes(manifestConfig)
 
     from("$buildDir/classes/java/main/org/zhl/agent/Agent.class")
-    destinationDirectory.set(file("$buildDir/agent"))
+//    destinationDirectory.set(file("$buildDir/agent"))
     archiveBaseName.set("JavaAgent")
     archiveVersion.set("1.0.0")
 }
@@ -39,7 +39,7 @@ tasks.create<JavaCompile>("buildMain") {
     source = sourceSets.main.get().java.asFileTree
     include("org/zhl/agent/Agent.java")
     classpath = sourceSets.main.get().compileClasspath
-    destinationDir = file("$buildDir/agent")
+//    destinationDir = file("$buildDir/agent")
 }
 
 tasks.create<JavaExec>("runAgentMain") {
