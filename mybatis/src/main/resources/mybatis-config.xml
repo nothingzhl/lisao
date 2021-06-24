@@ -15,4 +15,7 @@
             </dataSource>
         </environment>
     </environments>
+    <mappers>
+        <package name="org/zhl/dao"/>
+    </mappers>
 </configuration>

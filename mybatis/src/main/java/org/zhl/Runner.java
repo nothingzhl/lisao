@@ -4,11 +4,9 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.h2.tools.RunScript;
+import org.zhl.dao.TblDepartmentDao;
 
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
 
 /**
  * @program: lisao
@@ -24,15 +22,8 @@ public class Runner {
         RunScript
             .execute(sqlSessionFactory.openSession().getConnection(), Resources.getResourceAsReader("sql/init.sql"));
 
-        final Connection connection = sqlSessionFactory.openSession().getConnection();
-        final Statement statement = connection.createStatement();
-        final ResultSet resultSet = statement.executeQuery("select * from tbl_department");
-
-        while (resultSet.next()) {
-            System.out.println(resultSet.getString(0));
-        }
-
-        System.out.println(resultSet);
+        final TblDepartmentDao mapper = sqlSessionFactory.openSession().getMapper(TblDepartmentDao.class);
+        System.out.println(mapper.count());
     }
 
 }
