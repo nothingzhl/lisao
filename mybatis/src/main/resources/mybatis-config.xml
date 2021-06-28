@@ -16,6 +16,7 @@
         </environment>
     </environments>
     <mappers>
-        <package name="org/zhl/dao"/>
+        <mapper resource="mapper/TblDepartmentMapper.xml"/>
+        <mapper resource="mapper/user.xml"/>
     </mappers>
 </configuration>

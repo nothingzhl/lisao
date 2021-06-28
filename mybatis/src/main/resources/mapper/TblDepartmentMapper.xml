@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.zhl.dao.TblDepartmentDao">
+
+    <resultMap id="departMentWithUser" type="org.zhl.entity.TblDepartmentEntity">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="tel" column="tel"/>
+        <collection property="users" ofType="org.zhl.entity.UserEntity"
+                    select="org.zhl.dao.UserDao.findAllByDepartmentId" column="id"/>
+    </resultMap>
+
+    <select id="selectAll" resultType="org.zhl.entity.TblDepartmentEntity">
+        select *
+        from tbl_department
+    </select>
+    <select id="selectAllDepartmentUser" resultMap="departMentWithUser">
+        select *
+        from TBL_DEPARTMENT
+    </select>
+</mapper>

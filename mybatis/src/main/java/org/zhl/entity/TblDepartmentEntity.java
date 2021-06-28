@@ -2,6 +2,8 @@ package org.zhl.entity;
 
 import lombok.Data;
 
+import java.util.Set;
+
 /**
  * @author zhanghanlin
  */
@@ -12,4 +14,5 @@ public class TblDepartmentEntity {
   private String name;
   private String tel;
 
+  private Set<UserEntity> users;
 }

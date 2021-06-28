@@ -24,6 +24,7 @@ allprojects {
         set("jmockdataVersion", "4.2.0")
         set("jolVersion", "0.16")
         set("fastjsonVersion", "1.2.75")
+        set("slf4jVersion", "2.0.0-alpha1")
     }
 
 
@@ -52,7 +53,9 @@ subprojects {
         val jmockdataVersion = rootProject.ext["jmockdataVersion"] as String?
         val jolVersion = rootProject.ext["jolVersion"] as String?
         val fastjsonVersion = rootProject.ext["fastjsonVersion"] as String?
+        val slf4jVersion = rootProject.ext["slf4jVersion"] as String?
 
+        "implementation"("org.slf4j", "slf4j-api", "$slf4jVersion")
         "implementation"("com.github.jsonzou", "jmockdata", "$jmockdataVersion")
         "implementation"("com.github.javafaker", "javafaker", "$javaFakerVersion")
 
