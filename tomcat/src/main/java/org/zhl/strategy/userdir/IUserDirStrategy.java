@@ -12,6 +12,6 @@ public interface IUserDirStrategy {
      * @param userDir
      * @return
      */
-    String parser(String userDir);
+    String parser(String moudleName);
 
 }
