@@ -17,5 +17,4 @@ include("rocketmq")
 include("thirdlibrary")
 include("mybatis")
 include("tomcat")
-include("mvc")
-
+include("self-mvc")
