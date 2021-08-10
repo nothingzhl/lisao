@@ -32,4 +32,9 @@ public class SteamTest {
         final Map<Integer, Integer> collect = IntStream.range(0, 100).boxed().collect(getCollector());
         System.out.println(collect);
     }
+
+    @Test
+    void name() {
+        
+    }
 }
