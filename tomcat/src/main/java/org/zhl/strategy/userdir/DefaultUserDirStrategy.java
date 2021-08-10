@@ -2,6 +2,8 @@ package org.zhl.strategy.userdir;
 
 import com.google.common.base.Preconditions;
 
+import java.io.File;
+
 /**
  * @program: lisao
  * @description:
@@ -10,8 +12,8 @@ import com.google.common.base.Preconditions;
  **/
 public class DefaultUserDirStrategy implements IUserDirStrategy {
     @Override
-    public String parser(String userDir) {
-        Preconditions.checkNotNull(userDir, "userDir不能为空");
-        return userDir;
+    public String parser(String moudleName) {
+        Preconditions.checkNotNull(moudleName);
+        return System.getProperty("user.dir") + File.separator + moudleName;
     }
 }

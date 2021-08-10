@@ -35,12 +35,23 @@ subprojects {
     apply(plugin = "application")
     apply(plugin = "idea")
 
+    buildscript {
+        repositories {
+            gradlePluginPortal()
+        }
+
+        dependencies {
+            classpath("com.bmuschko:gradle-tomcat-plugin:2.7.0")
+        }
+    }
+
     repositories {
         maven("http://maven.aliyun.com/nexus/content/groups/public/")
         jcenter()
         google()
         mavenCentral()
     }
+
 
     dependencies {
 

@@ -1,11 +1,12 @@
 package org.zhl.tomcat;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.zhl.strategy.basedir.DefaultBaseDirStrategy;
 import org.zhl.strategy.basedir.IBaseDirStrategy;
 import org.zhl.strategy.userdir.DefaultUserDirStrategy;
 import org.zhl.strategy.userdir.IUserDirStrategy;
+import org.zhl.strategy.webappdir.GradleDefaultStrategy;
+import org.zhl.strategy.webappdir.IWebAppDirStrategy;
 
 import java.util.Optional;
 
@@ -15,6 +16,8 @@ import java.util.Optional;
  * @author: zhanghanlin
  * @create: 2021-07-19 22:48
  **/
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class TomcatConfig {
 
     @Setter
@@ -22,6 +25,9 @@ public class TomcatConfig {
 
     @Setter
     private IBaseDirStrategy baseDirStrategy;
+
+    @Setter
+    private IWebAppDirStrategy iWebAppDirStrategy;
 
     /**
      * 端口
@@ -48,6 +54,10 @@ public class TomcatConfig {
     @Setter
     private String webappDir;
 
+    @Setter
+    @NonNull
+    private String modelName;
+
     public String getUserDir() {
         return Optional.of(userDirStrategy).orElseGet(DefaultUserDirStrategy::new).parser(TomcatConfig.this.userDir);
     }
@@ -55,5 +65,10 @@ public class TomcatConfig {
     public String getTomcatBaseDir() {
         return Optional.ofNullable(baseDirStrategy).orElseGet(DefaultBaseDirStrategy::new)
             .parser(TomcatConfig.this.tomcatBaseDir);
+    }
+
+    public String getWebappDir() {
+        return Optional.ofNullable(iWebAppDirStrategy).orElseGet(GradleDefaultStrategy::new)
+            .parser(webappDir, modelName);
     }
 }
