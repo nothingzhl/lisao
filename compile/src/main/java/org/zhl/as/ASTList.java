@@ -8,16 +8,16 @@ import java.util.Objects;
  * @author zhanghanlin
  * @date 2021/10/31
  **/
-public class ASTList extends  AsTree{
+public class ASTList extends ASTree {
 
-    protected List<AsTree> children;
+    protected List<ASTree> children;
 
-    public ASTList(List<AsTree> children) {
+    public ASTList(List<ASTree> children) {
         this.children = children;
     }
 
     @Override
-    public AsTree child(int i) {
+    public ASTree child(int i) {
         return children.get(i);
     }
 
@@ -27,13 +27,13 @@ public class ASTList extends  AsTree{
     }
 
     @Override
-    public Iterator<AsTree> children() {
+    public Iterator<ASTree> children() {
         return children.iterator();
     }
 
     @Override
     public String location() {
-        for (AsTree item : children) {
+        for (ASTree item : children) {
             String s = item.location();
             if (Objects.nonNull(s)) {
                 return s;
@@ -47,7 +47,7 @@ public class ASTList extends  AsTree{
         StringBuilder sb = new StringBuilder();
         sb.append("(");
         String sep = "";
-        for (AsTree child : children) {
+        for (ASTree child : children) {
            sb.append(sep);
            sep= " ";
            sb.append(child.toString());

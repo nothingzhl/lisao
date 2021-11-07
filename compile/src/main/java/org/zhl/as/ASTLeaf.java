@@ -12,9 +12,9 @@ import java.util.List;
  * @author zhanghanlin
  * @date 2021/10/31
  **/
-public class ASTLeaf extends AsTree{
+public class ASTLeaf extends ASTree {
 
-    private static List<AsTree> empty = new ArrayList<>();
+    private static List<ASTree> empty = new ArrayList<>();
 
     protected Token<?> token;
 
@@ -23,7 +23,7 @@ public class ASTLeaf extends AsTree{
     }
 
     @Override
-    public AsTree child(int i) {
+    public ASTree child(int i) {
         throw new IndexOutOfBoundsException();
     }
 
@@ -33,7 +33,7 @@ public class ASTLeaf extends AsTree{
     }
 
     @Override
-    public Iterator<AsTree> children() {
+    public Iterator<ASTree> children() {
         return empty.iterator();
     }
 

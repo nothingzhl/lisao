@@ -6,15 +6,15 @@ import java.util.Iterator;
  * @author zhanghanlin
  * @date 2021/10/31
  **/
-public abstract class AsTree  implements Iterable<AsTree>{
+public abstract class ASTree implements Iterable<ASTree>{
 
     /**
      * 节点
      *
      * @param i 我
-     * @return {@link AsTree}
+     * @return {@link ASTree}
      */
-    public abstract AsTree child(int i);
+    public abstract ASTree child(int i);
 
     /**
      * n节点数
@@ -26,9 +26,9 @@ public abstract class AsTree  implements Iterable<AsTree>{
     /**
      * 迭代器
      *
-     * @return {@link Iterator<AsTree>}
+     * @return {@link Iterator< ASTree >}
      */
-    public abstract Iterator<AsTree> children();
+    public abstract Iterator<ASTree> children();
 
     /**
      * 位置
@@ -38,7 +38,7 @@ public abstract class AsTree  implements Iterable<AsTree>{
     public abstract String location();
 
     @Override
-    public Iterator<AsTree> iterator() {
+    public Iterator<ASTree> iterator() {
        return children();
     }
 }
