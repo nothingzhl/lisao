@@ -1,8 +1,10 @@
 package org.zhl.sort;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.RepeatedTest;
+import com.google.common.base.Stopwatch;
+import org.junit.jupiter.api.*;
 import org.zhl.TestData;
+
+import java.util.concurrent.TimeUnit;
 
 class SortTest extends TestData {
 
@@ -17,7 +19,7 @@ class SortTest extends TestData {
     }
 
     @RepeatedTest(10)
-    void testInsertionSort(){
+    void testInsertionSort() {
         sortTemple(new InsertionSort<Integer>());
     }
 
@@ -43,9 +45,17 @@ class SortTest extends TestData {
         countingSort.sort(data);
     }
 
-    private void sortTemple(Sort sort){
-        Integer[] data = getSortTestData();
+    @RepeatedTest(10)
+    void testBSSort() {
+        sortTemple(new BubbleSortOptimization2());
+    }
+
+    private void sortTemple(Sort sort) {
+        Stopwatch stopwatch = Stopwatch.createStarted();
+        Integer[] data = getSortTestData(100000, 10000);
         sort.sort(data);
+        System.out.println(sort.getClass().getSimpleName() + "==>>" + stopwatch.elapsed(TimeUnit.MILLISECONDS) + "ms");
+        stopwatch.stop();
         Assertions.assertTrue(sort.isSort(data));
     }
 

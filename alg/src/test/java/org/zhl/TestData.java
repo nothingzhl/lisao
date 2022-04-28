@@ -8,12 +8,16 @@ public class TestData {
 
     private Random random = ThreadLocalRandom.current();
 
-    protected Integer[] getSortTestData() {
-        return IntStream.range(0, 100)
-                .map(item -> random.nextInt(100))
+    protected Integer[] getSortTestData(int size,int max) {
+        return IntStream.range(0, size)
+                .map(item -> random.nextInt(max))
                 .distinct()
                 .mapToObj(Integer::new)
                 .toArray(Integer[]::new);
+    }
+
+    protected Integer[] getSortTestData(){
+        return getSortTestData(100,100);
     }
 
     protected Integer[] getSearchTestData() {

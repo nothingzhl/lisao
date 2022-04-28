@@ -105,7 +105,6 @@ public class AssertionsDemoTest {
     }
 
     @Test
-    @Disabled
     void timeoutExceeded() {
         assertTimeout(ofMillis(10), () -> {
             Thread.sleep(10);

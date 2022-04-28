@@ -28,6 +28,12 @@ public class Parser {
         reset(clazz);
     }
 
+    /**
+     * 初始化的
+     *
+     * @param clazz clazz
+     * @return {@link Parser}
+     */
     public Parser reset(Class<? extends ASTree> clazz) {
         elements = new ArrayList<>();
         factory = Factory.getForASTList(clazz);
