@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Timeout;
  *
  * @author zhanghanlin
  */
+@Disabled
 public class AssertionsDemoTest {
 
     Person person = Person.builder().firstName("John").lastName("Doe").build();
