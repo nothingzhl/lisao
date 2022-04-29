@@ -65,6 +65,7 @@ subprojects {
         val jolVersion = rootProject.ext["jolVersion"] as String?
         val fastjsonVersion = rootProject.ext["fastjsonVersion"] as String?
         val slf4jVersion = rootProject.ext["slf4jVersion"] as String?
+        val log4jVersion = rootProject.ext["log4jVersion"] as String?
 
         "implementation"("org.slf4j", "slf4j-api", "$slf4jVersion")
         "implementation"("com.github.jsonzou", "jmockdata", "$jmockdataVersion")
@@ -86,6 +87,8 @@ subprojects {
         "annotationProcessor"("org.projectlombok", "lombok", "$lombokVersion")
         "testCompileOnly"("org.projectlombok", "lombok", "$lombokVersion")
         "testAnnotationProcessor"("org.projectlombok", "lombok", "$lombokVersion")
+        "implementation"("org.apache.logging.log4j","log4j-core","$log4jVersion")
+        "implementation"("org.apache.logging.log4j:log4j-slf4j-impl:2.11.1")
     }
 
     val test by tasks.getting(Test::class) {

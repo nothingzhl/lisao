@@ -1,6 +1,7 @@
 package org.zhl.io.nio;
 
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
@@ -15,11 +16,12 @@ import java.util.Set;
 /**
  * @author zhanghanlin
  */
+@Slf4j
 public class NioServer {
 
     @SneakyThrows
     public static void main(final String[] args) {
-        System.out.println("服务启动");
+        log.info("服务启动");
         final ServerSocketChannel serverSocketChannel = ServerSocketChannel.open();
         serverSocketChannel.bind(new InetSocketAddress(8888), 50);
         serverSocketChannel.configureBlocking(false);
@@ -70,7 +72,7 @@ public class NioServer {
             final ByteBuffer readBuffer = ByteBuffer.allocate(1024);
             readBuffer.clear();
             socketChannel.read(readBuffer);
-            System.out.println(new String(readBuffer.array()));
+          log.info(new String(readBuffer.array()));
             key.interestOps(SelectionKey.OP_WRITE);
         } else if (key.isWritable()) {
             final SocketChannel socketChannel = (SocketChannel)key.channel();
@@ -80,7 +82,7 @@ public class NioServer {
                 throw new RuntimeException("有问题");
             }
             buffer.put(Charset.defaultCharset().encode("we done!").array());
-            System.out.println("echo =====>" + new String(buffer.array()));
+            log.info("echo =====>" + new String(buffer.array()));
             while (buffer.hasRemaining()) {
                 socketChannel.write(buffer);
             }
