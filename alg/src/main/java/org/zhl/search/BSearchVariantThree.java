@@ -6,7 +6,7 @@ package org.zhl.search;
  *
  * @param <T>
  */
-public class BSearchVariantThree<T extends Comparable> implements Search<T> {
+public class BSearchVariantThree<T extends Comparable<T>> implements Search<T> {
     @Override
     public int search(T[] t, T targetValue) {
 
