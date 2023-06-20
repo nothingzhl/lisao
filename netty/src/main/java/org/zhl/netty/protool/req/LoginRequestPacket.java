@@ -1,13 +1,17 @@
-package org.zhl.netty.protool;
+package org.zhl.netty.protool.req;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.zhl.netty.protool.Command;
+import org.zhl.netty.protool.Packet;
 
 /**
  * @author zhanghanlin
  * @date 2023/6/14
  **/
 @Data
-public class LoginRequestPacket extends Packet{
+@EqualsAndHashCode(callSuper = false)
+public class LoginRequestPacket extends Packet {
 
     private Integer userId;
 
